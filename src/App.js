@@ -1,25 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import Home from "./components/Home";
+import { useSelector } from 'react-redux'
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
+import { connect } from "react-redux";
 
 function App() {
+  const counter = useSelector((state) => state.id)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Navigate to="/shows" />} />
+          <Route exact path={`/shows/${counter}`} element={<Home />} />
+          <Route exact path="/shows" element={<Home />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
 
-export default App;
+export default connect()(App);
